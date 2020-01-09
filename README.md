@@ -15,7 +15,7 @@ or maven
 
 mvn exec:java
 
-Application will be starts on jetty server - localhost port 8585 (configurable in propertes file) and H2 in-memory database is initialized with sample user and account data.(note: Assuming we have account and user data in database and implemented transferfunds api to make it simple).
+Application will be starts on jetty server - localhost port 8585 (port and contextpath -configurable in propertes file) and H2 in-memory database is initialized with sample user and account data.(note: Assuming we have account and user data in database and implemented transferfunds api to make it simple).
 
 ## Money transfer API - 
 1.transfer funds API
@@ -25,7 +25,7 @@ http://localhost:8585/app/account/transferFund
 request:
 
 {     
-   "amount":750.0000,
+   "amount":750.00,
    "fromAccountId":100011,
    "toAccountId":100012
 }
