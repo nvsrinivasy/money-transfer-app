@@ -42,27 +42,27 @@ public class AccountDAOImpl implements IAccountDAO {
 			// Get from account user details and locks the rows it returns 
 			fromAccount=getAccountDetails(conn,userTransaction.getFromAccountId());
 			// Get to account user details and locks the rows it returns 			
-			toAccount=	getAccountDetails(conn,userTransaction.getToAccountId());
+			toAccount=getAccountDetails(conn,userTransaction.getToAccountId());
 			// check both account status status
 			if (fromAccount == null || toAccount == null) {
-				throw new AccountTransactionException("Failed to lock both accounts for write");
+				throw new AccountTransactionException("Account doesn't exists to make money transaction");
 			}		
 			BigDecimal accBal = accountBalanceCheck(fromAccount,userTransaction);
 			userTransaction.setFromAccountBalance(accBal);
 			userTransaction.setToAccountBalance(toAccount.getBalance().add(userTransaction.getAmount()));			
 			
 			// update both accounts with debit and credit amt
-			isTrasfer=	updateAccoutDetails(conn,userTransaction);
+			isTrasfer=updateAccoutDetails(conn,userTransaction);
 			
 			if (log.isDebugEnabled()) {
 				log.debug("Number of rows updated for the transfer : " + isTrasfer);
 			}
 			
 			//conn.commit();
-		} catch (SQLException se) {
-			// rollback transaction if exception occurs
+		} catch (SQLException se) {			
 			log.error("transferAccountBalance(): User Transaction Failed, rollback initiated for: " + userTransaction,	se);
 			try {
+				// rollback transaction if exception occurs
 				if (conn != null)
 					conn.rollback();
 			} catch (SQLException re) {
@@ -160,4 +160,13 @@ public class AccountDAOImpl implements IAccountDAO {
 
 		return accBalance;
 	}	
+	
+	/*isAccountExists() - this function helps to validate bank accounts
+	 * @param
+	 * @return
+	 */
+	private boolean isAccountExists(){
+	  
+		return false;
+	}
 }
